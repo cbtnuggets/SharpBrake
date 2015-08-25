@@ -26,6 +26,14 @@ namespace SharpBrake
             
             if (values != null)
                 AppVersion = values.FirstOrDefault();
+
+			string filters = ConfigurationManager.AppSettings["Airbrake.ParamsFilters"];
+
+			if (!String.IsNullOrEmpty(filters)) {
+				ParamFilters = filters.Split(';');
+			}else{
+				ParamFilters = new string[2]{"password", "password_confirmation"};
+			}
         }
 
 
@@ -69,5 +77,13 @@ namespace SharpBrake
         /// The project root.
         /// </value>
         public string ProjectRoot { get; set; }
+
+		/// <summary>
+		/// Gets or sets filtered prameter names.
+		/// </summary>
+		/// <value>
+		/// The filter list. 
+		/// </value>
+		public string[] ParamFilters { get; set; }
     }
 }

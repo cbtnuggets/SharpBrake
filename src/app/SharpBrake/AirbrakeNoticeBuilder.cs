@@ -326,7 +326,7 @@ namespace SharpBrake
 
             return from key in formData.AllKeys
                    where !String.IsNullOrEmpty(key)
-                   let value = formData[key]
+                   let value = configuration.ParamFilters.Any(f => key.ToLower().Contains(f)) ? "[FILTERED]" : formData[key]
                    where !String.IsNullOrEmpty(value)
                    select new AirbrakeVar(key, value);
         }
